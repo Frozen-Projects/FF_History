@@ -9,20 +9,10 @@ public class FF_SQLite : ModuleRules
 	public FF_SQLite(ReadOnlyTargetRules Target) : base(Target)
 	{
 		PCHUsage = ModuleRules.PCHUsageMode.UseExplicitOrSharedPCHs;
-		
-		PublicIncludePaths.AddRange(
-			new string[] {
-				// ... add public include paths required here ...
-			}
-			);
-				
-		PrivateIncludePaths.AddRange(
-			new string[] {
-				// ... add other private include paths required here ...
-			}
-			);
+        UndefinedIdentifierWarningLevel = WarningLevel.Off;
+        bEnableExceptions = true;
 
-		PublicDependencyModuleNames.AddRange(
+        PublicDependencyModuleNames.AddRange(
 			new string[]
 			{
 				"Core",
@@ -40,7 +30,6 @@ public class FF_SQLite : ModuleRules
 				"Projects",
                 "SQLiteSupport",
                 "SQLiteCore",
-                "DatabaseSupport"
 				// ... add private dependencies that you statically link with here ...	
 			}
 			);

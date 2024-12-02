@@ -15,21 +15,21 @@ bool UFF_SQLiteBPLibrary::SQLiteOpen(const FString DB_Path, ESQLiteOpenType Open
 
     switch (OpenType)
     {
-    case ESQLiteOpenType::ReadOnly:
-        OpenMode = ESQLiteDatabaseOpenMode::ReadOnly;
-        break;
+        case ESQLiteOpenType::ReadOnly:
+            OpenMode = ESQLiteDatabaseOpenMode::ReadOnly;
+            break;
 
-    case ESQLiteOpenType::ReadWrite:
-        OpenMode = ESQLiteDatabaseOpenMode::ReadWrite;
-        break;
+        case ESQLiteOpenType::ReadWrite:
+            OpenMode = ESQLiteDatabaseOpenMode::ReadWrite;
+            break;
 
-    case ESQLiteOpenType::ReadWriteCreate:
-        OpenMode = ESQLiteDatabaseOpenMode::ReadWriteCreate;
-        break;
+        case ESQLiteOpenType::ReadWriteCreate:
+            OpenMode = ESQLiteDatabaseOpenMode::ReadWriteCreate;
+            break;
 
-    default:
-        OpenMode = ESQLiteDatabaseOpenMode::ReadOnly;
-        break;
+        default:
+            OpenMode = ESQLiteDatabaseOpenMode::ReadOnly;
+            break;
     }
 
     USQLite_Connection* SQLiteConnection = NewObject<USQLite_Connection>();
