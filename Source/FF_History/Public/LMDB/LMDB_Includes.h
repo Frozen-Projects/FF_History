@@ -1,0 +1,5 @@
+#pragma once
+
+THIRD_PARTY_INCLUDES_START
+#include <lmdb.h>
+THIRD_PARTY_INCLUDES_END
