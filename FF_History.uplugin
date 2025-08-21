@@ -20,15 +20,5 @@
 			"Type": "Runtime",
 			"LoadingPhase": "PreLoadingScreen"
 		}
-	],
-	"Plugins": [
-		{
-			"Name": "SQLiteCore",
-			"Enabled": true
-		},
-		{
-			"Name": "SQLiteSupport",
-			"Enabled": true
-		}
 	]
 }

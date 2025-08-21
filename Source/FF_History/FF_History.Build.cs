@@ -1,5 +1,7 @@
 // Some copyright should be here...
 
+using System;
+using System.IO;
 using UnrealBuildTool;
 
 public class FF_History : ModuleRules
@@ -7,8 +9,15 @@ public class FF_History : ModuleRules
 	public FF_History(ReadOnlyTargetRules Target) : base(Target)
 	{
 		PCHUsage = ModuleRules.PCHUsageMode.UseExplicitOrSharedPCHs;
-		
-		PublicDependencyModuleNames.AddRange(
+        CppCompileWarningSettings.UndefinedIdentifierWarningLevel = WarningLevel.Off;
+        bEnableExceptions = true;
+
+        if (UnrealTargetPlatform.Win64 == Target.Platform)
+        {
+            bUseRTTI = true;
+        }
+
+        PublicDependencyModuleNames.AddRange(
 			new string[]
 			{
 				"Core",
@@ -24,20 +33,7 @@ public class FF_History : ModuleRules
 				"Slate",
 				"SlateCore",
                 "UMG",
-                "SQLiteSupport",
-                "SQLiteCore",
-				"cista",
-				"flatbuffers",
-				"leveldb",
-				"lmdb",
 				// ... add private dependencies that you statically link with here ...	
-			}
-			);
-		
-		DynamicallyLoadedModuleNames.AddRange(
-			new string[]
-			{
-				// ... add any modules that your module loads dynamically here ...
 			}
 			);
 	}
