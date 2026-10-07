@@ -22,7 +22,7 @@ private:
 	TMap<FGuid, UUserWidget*> Trash_Widgets;
 
 	UPROPERTY()
-	TMap<FGuid, UObject*> Trash_Objects;
+	TMap<FGuid, FTrashedObject> Trash_Objects;
 
 	UPROPERTY()
 	TArray<UTrash_Data*> UI_Data_Cache;
