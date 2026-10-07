@@ -1,6 +1,4 @@
-// Copyright Epic Games, Inc. All Rights Reserved.
-
-#include "FF_History_BP_Library.h"
+#include "Variables/Variables_BPLib.h"
 #include "FF_History.h"
 
 UFF_History_BP_Library::UFF_History_BP_Library(const FObjectInitializer& ObjectInitializer)

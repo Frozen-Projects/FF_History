@@ -1,7 +1,6 @@
 #pragma once
-
-#include "FF_History_Includes.h"
-#include "FF_History_Tools.generated.h"
+#include "CoreMinimal.h"
+#include "Variables_Structs.generated.h"
 
 USTRUCT(BlueprintType)
 struct FF_HISTORY_API FVariableContainer
@@ -102,12 +101,3 @@ FORCEINLINE uint32 GetTypeHash(const FVariablePool& Key)
 
 	return GenericHash;
 }
-
-UDELEGATE(BlueprintAuthorityOnly)
-DECLARE_DYNAMIC_DELEGATE_TwoParams(FDelegateSaveToFile, bool, bIsSuccessfull, FString, ErrorCode);
-
-UDELEGATE(BlueprintAuthorityOnly)
-DECLARE_DYNAMIC_DELEGATE_ThreeParams(FDelegateSaveToMemory, bool, bIsSuccessfull, FString, ErrorCode, const TArray<uint8>&, Out_Buffer);
-
-UDELEGATE(BlueprintAuthorityOnly)
-DECLARE_DYNAMIC_DELEGATE_ThreeParams(FDelegateLoadSave, bool, bIsSuccessfull, FString, ErrorCode, USaveGame*, Out_Save);
