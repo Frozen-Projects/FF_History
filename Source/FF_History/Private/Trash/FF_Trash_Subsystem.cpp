@@ -1,5 +1,7 @@
 #include "Trash/FF_Trash_Subsystem.h"
 
+#define TRASH_TAG TEXT("In_Trash")
+
 void UFF_Trash_Subsystem::Initialize(FSubsystemCollectionBase& Collection)
 {
 	Super::Initialize(Collection);
@@ -29,6 +31,7 @@ bool UFF_Trash_Subsystem::SendActorToTrash(FGuid& TrashGuid, AActor* Target_Acto
 	Target_Actor->SetActorHiddenInGame(true);
 	Target_Actor->SetActorTickEnabled(false);
 	Target_Actor->SetActorEnableCollision(false);
+	Target_Actor->Tags.AddUnique(FName(TRASH_TAG));
 
 	TArray<UActorComponent*> Actor_Components = Target_Actor->GetComponents().Array();
 
@@ -122,19 +125,100 @@ AActor* UFF_Trash_Subsystem::RestoreActorFromTrash(const FGuid& TrashGuid)
 		}
 	}
 
-	UTrash_Data* TrashDataToRemove = nullptr;
-	for (UTrash_Data* TrashData : this->UI_Data_Cache)
+	if (IsValid(this->UI_Trash))
 	{
-		if (IsValid(TrashData) && TrashData->ID == TrashGuid)
+		UTrash_Data* TrashDataToRemove = nullptr;
+		for (UTrash_Data* TrashData : this->UI_Data_Cache)
 		{
-			TrashDataToRemove = TrashData;
-			break;
+			if (IsValid(TrashData) && TrashData->ID == TrashGuid)
+			{
+				TrashDataToRemove = TrashData;
+				break;
+			}
+		}
+
+		this->UI_Trash->RemoveItemFromUi(TrashDataToRemove);
+		
+		if (this->UI_Data_Cache.Contains(TrashDataToRemove))
+		{
+			this->UI_Data_Cache.Remove(TrashDataToRemove);
 		}
 	}
 
 	this->Trash_Actors.Remove(TrashGuid);
-	this->UI_Trash->RemoveItemFromUi(TrashDataToRemove);
-	this->UI_Data_Cache.Remove(TrashDataToRemove);
+	Actor->Tags.Remove(FName(TRASH_TAG));
 
 	return Actor;
+}
+
+bool UFF_Trash_Subsystem::SendWidgetToTrash(FGuid& TrashGuid, UUserWidget* Target_Widget)
+{
+	if (!IsValid(Target_Widget))
+	{
+		return false;
+	}
+
+	Target_Widget->SetIsEnabled(false);
+	Target_Widget->SetVisibility(ESlateVisibility::Collapsed);
+
+	FGuid NewTrashGuid = FGuid::NewGuid();
+	this->Trash_Widgets.Add(NewTrashGuid, Target_Widget);
+
+	if (IsValid(this->UI_Trash))
+	{
+		const int32 WidgetIndex = Trash_Widgets.Num() - 1;
+
+		UTrash_Data* TrashData = NewObject<UTrash_Data>();
+		TrashData->Name = TEXT("UI_Element_") + FString::FromInt(WidgetIndex);
+		TrashData->ID = NewTrashGuid;
+		TrashData->ItemType = ETrashItemTypes::Actor;
+
+		this->UI_Data_Cache.Add(TrashData);
+		this->UI_Trash->AddItemToUi(TrashData);
+	}
+	
+	TrashGuid = NewTrashGuid;
+	return true;
+}
+
+UUserWidget* UFF_Trash_Subsystem::RestoreWidgetFromTrash(const FGuid& TrashGuid)
+{
+	if (!this->Trash_Widgets.Contains(TrashGuid))
+	{
+		return nullptr;
+	}
+
+	UUserWidget* Widget = this->Trash_Widgets[TrashGuid];
+	
+	if (!IsValid(Widget))
+	{
+		return nullptr;
+	}
+
+	Widget->SetIsEnabled(true);
+	Widget->SetVisibility(ESlateVisibility::Visible);
+
+	if (IsValid(this->UI_Trash))
+	{
+		UTrash_Data* TrashDataToRemove = nullptr;
+		for (UTrash_Data* TrashData : this->UI_Data_Cache)
+		{
+			if (IsValid(TrashData) && TrashData->ID == TrashGuid)
+			{
+				TrashDataToRemove = TrashData;
+				break;
+			}
+		}
+
+		this->UI_Trash->RemoveItemFromUi(TrashDataToRemove);
+
+		if (this->UI_Data_Cache.Contains(TrashDataToRemove))
+		{
+			this->UI_Data_Cache.Remove(TrashDataToRemove);
+		}
+	}
+
+	this->Trash_Widgets.Remove(TrashGuid);
+
+	return Widget;
 }

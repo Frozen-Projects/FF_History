@@ -19,7 +19,7 @@ private:
 	TMap<FGuid, FTrashedActor> Trash_Actors;
 
 	UPROPERTY()
-	TMap<FGuid, FTrashedWidget> Trash_Widgets;
+	TMap<FGuid, UUserWidget*> Trash_Widgets;
 
 	UPROPERTY()
 	TMap<FGuid, UObject*> Trash_Objects;
@@ -39,6 +39,12 @@ public:
 
 	UFUNCTION(BlueprintCallable, Category = "Frozen Forest | History | Trash Subsystem")
 	virtual AActor* RestoreActorFromTrash(const FGuid& TrashGuid);
+
+	UFUNCTION(BlueprintCallable, Category = "Frozen Forest | History | Trash Subsystem")
+	virtual bool SendWidgetToTrash(FGuid& TrashGuid, UUserWidget* Target_Widget);
+
+	UFUNCTION(BlueprintCallable, Category = "Frozen Forest | History | Trash Subsystem")
+	virtual UUserWidget* RestoreWidgetFromTrash(const FGuid& TrashGuid);
 
 	UPROPERTY(BlueprintReadWrite, Category = "Frozen Forest | History | Trash Subsystem")
 	UWidget_Trash* UI_Trash = nullptr;

@@ -31,18 +31,3 @@ public:
 	UPROPERTY(BlueprintReadOnly)
 	TMap<UPrimitiveComponent*, bool> ComponentNavigationStates;
 };
-
-USTRUCT(BlueprintType)
-struct FF_HISTORY_API FTrashedWidget
-{
-	GENERATED_BODY()
-
-public:
-
-	UPROPERTY(BlueprintReadOnly)
-	UUserWidget* Widget = nullptr;
-
-	UPROPERTY(BlueprintReadOnly)
-	UUserWidget* Parent = nullptr;
-
-};
