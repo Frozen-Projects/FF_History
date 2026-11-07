@@ -222,3 +222,13 @@ UUserWidget* UFF_Trash_Subsystem::RestoreWidgetFromTrash(const FGuid& TrashGuid)
 
 	return Widget;
 }
+
+bool UFF_Trash_Subsystem::SendObjectToTrash(FGuid& TrashGuid, UObject* Target_Object)
+{
+	return false;
+}
+
+UObject* UFF_Trash_Subsystem::RestoreObjectFromTrash(const FGuid& TrashGuid)
+{
+	return nullptr;
+}

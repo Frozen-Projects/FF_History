@@ -1,7 +1,3 @@
-// Some copyright should be here...
-
-using System;
-using System.IO;
 using UnrealBuildTool;
 
 public class FF_History : ModuleRules
@@ -21,9 +17,7 @@ public class FF_History : ModuleRules
 			new string[]
 			{
 				"Core",
-				// ... add other public dependencies that you statically link with here ...
-			}
-			);
+			});
 		
 		PrivateDependencyModuleNames.AddRange(
 			new string[]
@@ -33,8 +27,6 @@ public class FF_History : ModuleRules
 				"Slate",
 				"SlateCore",
                 "UMG",
-				// ... add private dependencies that you statically link with here ...	
-			}
-			);
+			});
 	}
 }

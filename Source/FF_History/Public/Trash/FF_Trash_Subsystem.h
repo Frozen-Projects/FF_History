@@ -46,6 +46,12 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "Frozen Forest | History | Trash Subsystem")
 	virtual UUserWidget* RestoreWidgetFromTrash(const FGuid& TrashGuid);
 
+	UFUNCTION(BlueprintCallable, Category = "Frozen Forest | History | Trash Subsystem")
+	virtual bool SendObjectToTrash(FGuid& TrashGuid, UObject* Target_Object);
+
+	UFUNCTION(BlueprintCallable, Category = "Frozen Forest | History | Trash Subsystem")
+	virtual UObject* RestoreObjectFromTrash(const FGuid& TrashGuid);
+
 	UPROPERTY(BlueprintReadWrite, Category = "Frozen Forest | History | Trash Subsystem")
 	UWidget_Trash* UI_Trash = nullptr;
 
